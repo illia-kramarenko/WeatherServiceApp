@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Weather Service App</string>
+    <string name="hint_label1">Enter your city and country</string>
+    <string name="hint_editText">e. g. Kyiv, UA</string>
+    <string name="action_settings">Settings</string>
+    <string name="get_sync">Get Weather Sync</string>
+    <string name="get_async">Get Weather Async</string>
+</resources>
