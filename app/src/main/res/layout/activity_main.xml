@@ -15,7 +15,7 @@
         android:id="@+id/linearLayout">
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/hint_label1"
             android:id="@+id/hintLabel"
@@ -27,7 +27,8 @@
             android:layout_weight="3"
             android:inputType="text"
             android:hint="@string/hint_editText"
-            android:id="@+id/editText"/>
+            android:id="@+id/editText"
+            android:textSize="@dimen/abc_text_size_small_material"/>
     </LinearLayout>
 
     <Button
@@ -56,7 +57,7 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"

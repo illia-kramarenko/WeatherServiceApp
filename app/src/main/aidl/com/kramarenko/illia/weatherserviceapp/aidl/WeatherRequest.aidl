@@ -1,6 +1,7 @@
-package aidl;
+// WeatherRequest.aidl
+package com.kramarenko.illia.weatherserviceapp.aidl;
 
-import aidl.WeatherResults;
+import com.kramarenko.illia.weatherserviceapp.aidl.WeatherResults;
 
 /**
  * Interface defining the method implemented within
@@ -17,5 +18,5 @@ interface WeatherRequest {
     * to the WeatherActivity via the one-way sendResults() method.
     */
     oneway void getCurrentWeather(in String Weather,
-                                  in WeatherResults results); 
+                                  in WeatherResults results);
 }

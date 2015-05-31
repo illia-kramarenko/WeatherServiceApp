@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.kramarenko.illia.weatherserviceapp.R;
 import com.kramarenko.illia.weatherserviceapp.aidl.WeatherData;
 import com.kramarenko.illia.weatherserviceapp.jsonweather.WeatherJSONParser;
+import com.kramarenko.illia.weatherserviceapp.utils.Utils;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -33,14 +34,8 @@ public class MainActivity extends LifecycleLoggingActivity {
 
     private EditText mInputCity;
 
-    private Button mWeatherSyncButton;
-
-    private Button mWeatherAsyncButton;
-
     private TextView mResultTextView;
 
-    private final static String sWeather_Web_Service_URL =
-            "http://api.openweathermap.org/data/2.5/weather?q=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +43,11 @@ public class MainActivity extends LifecycleLoggingActivity {
         setContentView(R.layout.activity_main);
 
         mInputCity = (EditText) findViewById(R.id.editText);
-        mWeatherSyncButton = (Button) findViewById(R.id.buttonSync);
-        mWeatherAsyncButton = (Button) findViewById(R.id.buttonAsync);
         mResultTextView = (TextView) findViewById(R.id.resultText);
     }
 
-    public void downloadSync(View v){
-        hideKeyboard();
+    public void downloadSync(View view){
+        Utils.hideKeyboard(this, view.getWindowToken());
 
         String mCity = mInputCity.getText().toString();
 
@@ -71,7 +64,7 @@ public class MainActivity extends LifecycleLoggingActivity {
              */
             protected WeatherData doInBackground(String... city) {
                 mCity = city[0];
-                return getWeather(mCity);
+                return Utils.getWeatherData(mCity);
             }
 
             /**
@@ -110,45 +103,10 @@ public class MainActivity extends LifecycleLoggingActivity {
     }
 
     public void downloadAsync(View view) {
-        hideKeyboard();
+        Utils.hideKeyboard(this, view.getWindowToken());
         Toast.makeText(this, "Wow. Keep your trousers on", Toast.LENGTH_LONG).show();
     }
 
-
-    private WeatherData getWeather(String city){
-
-        WeatherData weatherData = null;
-
-        try {
-            // Append the location to create the full URL.
-            final URL url = new URL(sWeather_Web_Service_URL + city);
-
-            // Opens a connection to the Acronym Service.
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-            // Sends the GET request and reads the Json results.
-            try (InputStream in = new BufferedInputStream(urlConnection.getInputStream())) {
-
-                final WeatherJSONParser parser = new WeatherJSONParser();
-
-                weatherData = parser.parseJsonStream(in);
-            } finally {
-                urlConnection.disconnect();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return weatherData;
-    }
-
-
-    protected void hideKeyboard() {
-        InputMethodManager mgr =
-                (InputMethodManager) getSystemService
-                        (Context.INPUT_METHOD_SERVICE);
-        mgr.hideSoftInputFromWindow(mInputCity.getWindowToken(),
-                0);
-    }
 
 
     /**====================MENU(idk if i need it)====================================*/

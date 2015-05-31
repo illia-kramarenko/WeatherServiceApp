@@ -1,4 +1,7 @@
-package aidl;
+// WeatherData.aidl
+package com.kramarenko.illia.weatherserviceapp.aidl;
+
+// Declare any non-default types here with import statements
 
 /**
  * AIDL definition for the WeatherData class, which the AIDL compiler

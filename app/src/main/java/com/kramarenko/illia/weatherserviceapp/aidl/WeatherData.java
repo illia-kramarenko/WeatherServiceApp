@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * This class is a Plain Old Java Object (POJO) used for data
  * transport within the WeatherService app.  This POJO implements the
  * Parcelable interface to enable IPC between the WeatherActivity and
- * the WeatherServiceSync and WeatherServiceAsync. It represents the
+ * the WeatherServiceSync and WeatherServiceSync. It represents the
  * response Json obtained from the Open Weather Map API, e.g., a call
  * to http://api.openweathermap.org/data/2.5/weather?q=Nashville,TN
  * might return the following Json data:
@@ -107,6 +107,9 @@ public class WeatherData implements Parcelable {
             + ", sunset=" + mSunset + "]";
     }
 
+    /**
+     * Check if Weather Data Object is empty
+     */
     public boolean isEmpty(){
         return mCountry.isEmpty() &&
                 mCity.isEmpty() &&
