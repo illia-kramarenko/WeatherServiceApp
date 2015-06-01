@@ -4,6 +4,7 @@ package com.kramarenko.illia.weatherserviceapp.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -34,7 +35,7 @@ public class Utils {
      */
     public static WeatherData getWeatherData(final String city) {
         WeatherData weatherData = null;
-
+        Log.d(TAG, "Entering getWeatherData");
         try {
             // Append the location to create the full URL.
             final URL url = new URL(sWeather_Web_Service_URL + city);

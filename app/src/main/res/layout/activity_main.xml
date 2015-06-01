@@ -6,7 +6,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#273f4b">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +20,7 @@
             android:layout_weight="1"
             android:text="@string/hint_label1"
             android:id="@+id/hintLabel"
-            android:textColor="#202020"/>
+            android:textColor="#e2e1e1"/>
 
         <EditText
             android:layout_width="0dp"
@@ -28,45 +29,179 @@
             android:inputType="text"
             android:hint="@string/hint_editText"
             android:id="@+id/editText"
-            android:textSize="@dimen/abc_text_size_small_material"/>
+            android:textSize="@dimen/abc_text_size_small_material"
+            android:textColor="#e2e1e1" />
     </LinearLayout>
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/get_sync"
-        android:id="@+id/buttonSync"
         android:layout_below="@+id/linearLayout"
-        android:layout_alignParentStart="true"
-        android:onClick="downloadSync"/>
+        android:id="@+id/linearLayout2">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/get_sync"
+            android:textSize="@dimen/abc_text_size_small_material"
+            android:id="@+id/buttonSync"
+            android:layout_weight="12"
+            android:onClick="downloadSync"
+            android:background="#1d3340"
+            android:textColor="#e2e1e1"
+            android:layout_marginLeft="5dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/get_async"
-        android:id="@+id/buttonAsync"
-        android:layout_below="@+id/linearLayout"
-        android:layout_alignEnd="@+id/linearLayout"
-        android:onClick="downloadAsync"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
 
-    <TableLayout
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/get_async"
+            android:textSize="@dimen/abc_text_size_small_material"
+            android:id="@+id/buttonAsync"
+            android:layout_weight="12"
+            android:onClick="downloadAsync"
+            android:background="#1d3340"
+            android:textColor="#e2e1e1"
+            android:layout_marginRight="5dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/buttonSync"
-        android:layout_alignParentStart="true">
+        android:layout_below="@+id/linearLayout2"
+        android:layout_alignParentStart="true"
+        android:orientation="horizontal">
+        <TableLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
 
-            <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/country"
+                    android:layout_column="0"
+                    android:textColor="#ffa6a5a5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:id="@+id/country"
+                    android:layout_column="1"
+                    android:textColor="#e2e1e1"
+                    android:layout_marginLeft="10dp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/city"
+                    android:layout_column="0"
+                    android:textColor="#ffa6a5a5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:id="@+id/city"
+                    android:layout_column="1"
+                    android:textColor="#e2e1e1"
+                    android:layout_marginLeft="10dp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/temp"
+                    android:layout_column="0"
+                    android:textColor="#ffa6a5a5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:id="@+id/temp"
+                    android:layout_column="1"
+                    android:textColor="#e2e1e1"
+                    android:layout_marginLeft="10dp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/wind"
+                    android:layout_column="0"
+                    android:textColor="#ffa6a5a5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:id="@+id/wind"
+                    android:layout_column="1"
+                    android:textColor="#e2e1e1"
+                    android:layout_marginLeft="10dp" />
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/humidity"
+                    android:layout_column="0"
+                    android:textColor="#ffa6a5a5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:id="@+id/humidity"
+                    android:layout_column="1"
+                    android:textColor="#e2e1e1"
+                    android:layout_marginLeft="10dp" />
+            </TableRow>
+
+
+        </TableLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/relLay1">
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text=""
-                android:id="@+id/resultText"
-                android:layout_column="0" />
-
-        </TableRow>
-    </TableLayout>
+                android:id="@+id/iconView"
+                android:layout_alignParentStart="true"/>
+        </RelativeLayout>
+    </LinearLayout>
 </RelativeLayout>

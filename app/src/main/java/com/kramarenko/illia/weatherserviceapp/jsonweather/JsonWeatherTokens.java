@@ -10,6 +10,7 @@ public class JsonWeatherTokens {
 
     public static final String WEATHER = "weather";
     public static final String DESCRIPTION = "description";
+    public static final String ICON = "icon";
 
     public static final String MAIN = "main";
     public static final String TEMP = "temp";

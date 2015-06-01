@@ -3,6 +3,7 @@ package com.kramarenko.illia.weatherserviceapp.jsonweather;
 
 import android.util.JsonReader;
 import android.util.JsonToken;
+import android.util.Log;
 
 import com.kramarenko.illia.weatherserviceapp.aidl.WeatherData;
 
@@ -24,7 +25,7 @@ public class WeatherJSONParser {
 
     public WeatherData parseJsonStream(InputStream inputStream)
             throws IOException {
-
+        Log.d(TAG, "Entering parseJsonStream");
         // Create a JsonReader for the inputStream.
         try (JsonReader reader =
                      new JsonReader(new InputStreamReader(inputStream,
@@ -32,6 +33,7 @@ public class WeatherJSONParser {
 
             // Handle the array returned from the Weather Service.
             parseWeatherServiceResults(reader);
+            Log.d(TAG, "RETURNING weatherData:" + weatherData.toString());
             return weatherData ;
         }
     }
@@ -40,7 +42,7 @@ public class WeatherJSONParser {
     private void parseWeatherServiceResults(JsonReader reader)
             throws IOException {
 
-
+        Log.d(TAG, "Entering parse Weather Service Results");
         reader.beginObject();
         try {
             while (reader.hasNext()) {
@@ -76,7 +78,7 @@ public class WeatherJSONParser {
 
     private void parseWeatherFormSys(JsonReader reader)
             throws IOException {
-
+        Log.d(TAG, "Entering parseWeatherFormSys");
         reader.beginObject();
         try {
             while (reader.hasNext()) {
@@ -103,6 +105,7 @@ public class WeatherJSONParser {
 
     private void parseWeatherFormWeather(JsonReader reader)
         throws IOException{
+        Log.d(TAG, "Entering parseWeatherFormWeather");
 
         reader.beginArray();
         reader.beginObject();
@@ -112,6 +115,9 @@ public class WeatherJSONParser {
                 switch (name) {
                     case JsonWeatherTokens.DESCRIPTION:
                         weatherData.setWeather(reader.nextString());
+                        break;
+                    case JsonWeatherTokens.ICON:
+                        weatherData.setIcon(reader.nextString());
                         break;
                     default:
                         reader.skipValue();
@@ -127,6 +133,7 @@ public class WeatherJSONParser {
 
     private void parseWeatherFormMain(JsonReader reader)
         throws IOException{
+        Log.d(TAG, "Entering parseWeatherFormMain");
 
         reader.beginObject();
         try {
@@ -151,7 +158,7 @@ public class WeatherJSONParser {
 
     private void parseWeatherFormWind(JsonReader reader)
         throws IOException{
-
+        Log.d(TAG, "Entering parseWeatherFormWind");
         reader.beginObject();
         try {
             while (reader.hasNext()) {

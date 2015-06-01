@@ -1,40 +1,44 @@
 package com.kramarenko.illia.weatherserviceapp.activities;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kramarenko.illia.weatherserviceapp.R;
 import com.kramarenko.illia.weatherserviceapp.aidl.WeatherData;
-import com.kramarenko.illia.weatherserviceapp.jsonweather.WeatherJSONParser;
 import com.kramarenko.illia.weatherserviceapp.utils.Utils;
-
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.List;
 
 
 public class MainActivity extends LifecycleLoggingActivity {
 
+
+
+    // TODO - make layout
+
+    // TODO - FORMAT OUTPUT DATA
+
+    // TODO - refactor Weather Operations
+
+    // TODO - Test Services
+
+    // TODO - config changes
+
     private EditText mInputCity;
 
-    private TextView mResultTextView;
+    private ImageView mIconView;
+
+    private TextView mCountry;
+    private TextView mCity;
+    private TextView mTemp;
+    private TextView mWind;
+    private TextView mHumidity;
 
 
     @Override
@@ -43,19 +47,25 @@ public class MainActivity extends LifecycleLoggingActivity {
         setContentView(R.layout.activity_main);
 
         mInputCity = (EditText) findViewById(R.id.editText);
-        mResultTextView = (TextView) findViewById(R.id.resultText);
+        mIconView = (ImageView) findViewById(R.id.iconView);
+
+        mCountry = (TextView) findViewById(R.id.country);
+        mCity = (TextView) findViewById(R.id.city);
+        mTemp = (TextView) findViewById(R.id.temp);
+        mWind = (TextView) findViewById(R.id.wind);
+        mHumidity = (TextView) findViewById(R.id.humidity);
     }
 
     public void downloadSync(View view){
         Utils.hideKeyboard(this, view.getWindowToken());
 
-        String mCity = mInputCity.getText().toString();
+        String mCityStr = mInputCity.getText().toString();
 
         new AsyncTask<String, Void, WeatherData> () {
             /**
              * Acronym we're trying to expand.
              */
-            private String mCity;
+            private String mCityStr;
 
             /**
              * Retrieve the expanded acronym results via a
@@ -63,41 +73,41 @@ public class MainActivity extends LifecycleLoggingActivity {
              * background thread to avoid blocking the UI thread.
              */
             protected WeatherData doInBackground(String... city) {
-                mCity = city[0];
-                return Utils.getWeatherData(mCity);
+                mCityStr = city[0];
+                return Utils.getWeatherData(mCityStr);
             }
 
             /**
              * Display the results in the UI Thread.
              */
-            protected void onPostExecute(WeatherData resultWeatherList) {
-                if (resultWeatherList != null) {
-                    if (!resultWeatherList.isEmpty()) {
+            protected void onPostExecute(WeatherData resultWeatherData) {
+                if (resultWeatherData != null) {
+                    Log.d(TAG, "RECIEVED resultWeatherData:" + resultWeatherData.toString());
+                    if (!resultWeatherData.isEmpty()) {
                         try {
-                            mResultTextView.setText("Country:" + resultWeatherList.getCountry()
-                                            + ", sunrise:" + resultWeatherList.getSunrise()
-                                            + ", sunset:" + resultWeatherList.getSunset()
-                                            + ", weather:" + resultWeatherList.getWeather()
-                                            + ", temp:" + resultWeatherList.getTemp()
-                                            + ", humidity:" + resultWeatherList.getHumidity()
-                                            + ", speed:" + resultWeatherList.getSpeed()
-                                            + ", deg:" + resultWeatherList.getDeg()
-                                            + ", city:" + resultWeatherList.getCity()
+                            mCountry.setText(resultWeatherData.getCountry());
+                            mCity.setText(resultWeatherData.getCity());
+                            mTemp.setText(String.valueOf(resultWeatherData.getTemp()));
+                            mWind.setText(String.valueOf(resultWeatherData.getSpeed()) + " " + String.valueOf(resultWeatherData.getDeg()) );
+                            mHumidity.setText(String.valueOf(resultWeatherData.getHumidity()));
 
-                            );
+                            int id = getResources().getIdentifier("com.kramarenko.illia.weatherserviceapp:drawable/clouds", null, null);
+                            mIconView.setImageResource(id);
+
+
                         } catch (NullPointerException e) {
                             e.printStackTrace();
                         }
                     } else {
-                        mResultTextView.setText("Err 404");
+                        mCountry.setText("Err 404");
                     }
                 } else {
-                    Log.d(TAG, "resultWeatherList = NULL NULL NULL NULL NULL NULL NULL ");
+                    Log.d(TAG, "resultWeatherData = NULL NULL NULL NULL NULL NULL NULL ");
                 }
             }
             // Execute the AsyncTask to expand the acronym without
             // blocking the caller.
-        }.execute(mCity);
+        }.execute(mCityStr);
 
 
     }

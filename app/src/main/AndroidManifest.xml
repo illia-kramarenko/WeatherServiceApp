@@ -20,15 +20,7 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".services.WeatherServiceSync"
-            android:process="remoteSync">
-        </service>
 
-        <service
-            android:name=".services.WeatherServiceAsync"
-            android:process="remoteAsync" >
-        </service>
     </application>
 
 </manifest>

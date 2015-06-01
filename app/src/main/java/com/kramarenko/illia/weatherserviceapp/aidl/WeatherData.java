@@ -46,6 +46,7 @@ public class WeatherData implements Parcelable {
     private long mHumidity;
     private long mSunrise;
     private long mSunset;
+    private String mIcon;
 
     /**
      * Constructor
@@ -58,6 +59,7 @@ public class WeatherData implements Parcelable {
      * @param humidity
      * @param sunrise
      * @param sunset
+     * @param icon
      */
     public WeatherData(String country,
                        String city,
@@ -67,7 +69,8 @@ public class WeatherData implements Parcelable {
                        double temp,
                        long humidity,
                        long sunrise,
-                       long sunset) {
+                       long sunset,
+                       String icon) {
         mCountry = country;
         mCity = city;
         mWeather = weather;
@@ -77,6 +80,7 @@ public class WeatherData implements Parcelable {
         mHumidity = humidity;
         mSunrise = sunrise;
         mSunset = sunset;
+        mIcon = icon;
     }
 
     public WeatherData() {
@@ -89,6 +93,7 @@ public class WeatherData implements Parcelable {
         mHumidity = 0;
         mSunrise = 0;
         mSunset = 0;
+        mIcon = "";
     }
 
     /**
@@ -104,7 +109,8 @@ public class WeatherData implements Parcelable {
             + ", temp=" + mTemp 
             + ", humidity=" + mHumidity 
             + ", sunrise=" + mSunrise 
-            + ", sunset=" + mSunset + "]";
+            + ", sunset=" + mSunset
+            + ", icon=" + mIcon + "]";
     }
 
     /**
@@ -119,7 +125,8 @@ public class WeatherData implements Parcelable {
                 mTemp == 0 &&
                 mHumidity == 0 &&
                 mSunrise == 0 &&
-                mSunset == 0;
+                mSunset == 0 &&
+                mIcon.isEmpty();
     }
 
     /**     Setters and getters */
@@ -160,6 +167,10 @@ public class WeatherData implements Parcelable {
         return mSunset;
     }
 
+    public String getIcon(){
+        return mIcon;
+    }
+
     public void setCountry(String country){
         mCountry = country;
     }
@@ -196,6 +207,10 @@ public class WeatherData implements Parcelable {
         mSunset = sunset;
     }
 
+    public void setIcon(String icon){
+        mIcon = icon;
+    }
+
 
     /*
      * BELOW THIS is related to Parcelable Interface.
@@ -224,6 +239,7 @@ public class WeatherData implements Parcelable {
         dest.writeLong(mHumidity);
         dest.writeLong(mSunrise);
         dest.writeLong(mSunset);
+        dest.writeString(mIcon);
     }
 
     /**
@@ -245,6 +261,7 @@ public class WeatherData implements Parcelable {
         mHumidity = in.readLong();
         mSunrise = in.readLong();
         mSunset = in.readLong();
+        mIcon = in.readString();
     }
 
     /**
