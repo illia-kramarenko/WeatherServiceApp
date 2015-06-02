@@ -29,6 +29,9 @@ public class Utils {
     private final static String sWeather_Web_Service_URL =
             "http://api.openweathermap.org/data/2.5/weather?q=";
 
+    private final static String sWeather_Web_Service_URL_Param =
+            "&units=metric";
+
     /**
      * Obtain the Weather information.
      *
@@ -38,7 +41,7 @@ public class Utils {
         Log.d(TAG, "Entering getWeatherData");
         try {
             // Append the location to create the full URL.
-            final URL url = new URL(sWeather_Web_Service_URL + city);
+            final URL url = new URL(sWeather_Web_Service_URL + city + sWeather_Web_Service_URL_Param);
 
             // Opens a connection to the Acronym Service.
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

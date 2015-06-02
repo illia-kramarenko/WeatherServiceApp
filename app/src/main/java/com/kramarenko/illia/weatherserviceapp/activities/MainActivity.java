@@ -39,6 +39,12 @@ public class MainActivity extends LifecycleLoggingActivity {
     private TextView mTemp;
     private TextView mWind;
     private TextView mHumidity;
+    private TextView mWeather;
+
+    final String DEGREE  = "\u00b0";
+    final String DEGREE_CEL  = "\u2103";
+
+    private final String iconsResPath = "com.kramarenko.illia.weatherserviceapp:drawable/icon";
 
 
     @Override
@@ -54,6 +60,7 @@ public class MainActivity extends LifecycleLoggingActivity {
         mTemp = (TextView) findViewById(R.id.temp);
         mWind = (TextView) findViewById(R.id.wind);
         mHumidity = (TextView) findViewById(R.id.humidity);
+        mWeather = (TextView) findViewById(R.id.weather);
     }
 
     public void downloadSync(View view){
@@ -62,13 +69,10 @@ public class MainActivity extends LifecycleLoggingActivity {
         String mCityStr = mInputCity.getText().toString();
 
         new AsyncTask<String, Void, WeatherData> () {
-            /**
-             * Acronym we're trying to expand.
-             */
-            private String mCityStr;
 
+            private String mCityStr;
             /**
-             * Retrieve the expanded acronym results via a
+             * Retrieve the weather results via a
              * synchronous two-way method call, which runs in a
              * background thread to avoid blocking the UI thread.
              */
@@ -85,21 +89,12 @@ public class MainActivity extends LifecycleLoggingActivity {
                     Log.d(TAG, "RECIEVED resultWeatherData:" + resultWeatherData.toString());
                     if (!resultWeatherData.isEmpty()) {
                         try {
-                            mCountry.setText(resultWeatherData.getCountry());
-                            mCity.setText(resultWeatherData.getCity());
-                            mTemp.setText(String.valueOf(resultWeatherData.getTemp()));
-                            mWind.setText(String.valueOf(resultWeatherData.getSpeed()) + " " + String.valueOf(resultWeatherData.getDeg()) );
-                            mHumidity.setText(String.valueOf(resultWeatherData.getHumidity()));
-
-                            int id = getResources().getIdentifier("com.kramarenko.illia.weatherserviceapp:drawable/clouds", null, null);
-                            mIconView.setImageResource(id);
-
-
+                           setResults(resultWeatherData);
                         } catch (NullPointerException e) {
                             e.printStackTrace();
                         }
                     } else {
-                        mCountry.setText("Err 404");
+                       locNotFound();
                     }
                 } else {
                     Log.d(TAG, "resultWeatherData = NULL NULL NULL NULL NULL NULL NULL ");
@@ -117,29 +112,53 @@ public class MainActivity extends LifecycleLoggingActivity {
         Toast.makeText(this, "Wow. Keep your trousers on", Toast.LENGTH_LONG).show();
     }
 
-
-
-    /**====================MENU(idk if i need it)====================================*/
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    private void setResults(WeatherData resultWeatherData){
+        mCountry.setText(resultWeatherData.getCountry());
+        mCity.setText(resultWeatherData.getCity());
+        mTemp.setText(String.valueOf(Math.round(resultWeatherData.getTemp())) + DEGREE_CEL);
+        mWind.setText(String.valueOf(Math.round(resultWeatherData.getSpeed())) + " m/s " + calcWindDirection(resultWeatherData.getDeg()));
+        mHumidity.setText(String.valueOf(resultWeatherData.getHumidity()) + "%");
+        mWeather.setText(Character.toUpperCase(resultWeatherData.getWeather().charAt(0)) + resultWeatherData.getWeather().substring(1));
+        int id = getResources().getIdentifier(iconsResPath + resultWeatherData.getIcon(), null, null);
+        mIconView.setImageResource(id);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    private void locNotFound(){
+        mCountry.setText("");
+        mCity.setText("");
+        mTemp.setText("");
+        mWind.setText("");
+        mHumidity.setText("");
+        mWeather.setText("Location not found");
+        mIconView.setImageDrawable(null);
     }
 
+    private String calcWindDirection(double deg){
+        int mDeg = (int) deg;
+        if(mDeg > 337 && mDeg < 23) // 338 - 22
+            return "N";
+
+        if(mDeg > 22 && mDeg < 68) // 23 - 67
+            return "NE";
+
+        if(mDeg > 67 && mDeg < 114) // 68 - 113
+            return "E";
+
+        if(mDeg > 113 && mDeg < 158) // 114 - 157
+            return "SE";
+
+        if(mDeg > 157 && mDeg < 203) // 158 - 202
+            return "S";
+
+        if(mDeg > 202 && mDeg < 248) // 203 - 247
+            return "SW";
+
+        if(mDeg > 247 && mDeg < 293) // 248 - 292
+            return "W";
+
+        if(mDeg > 292 && mDeg < 338) // 293 - 337
+            return "E";
+
+        else return "";
+    }
 }

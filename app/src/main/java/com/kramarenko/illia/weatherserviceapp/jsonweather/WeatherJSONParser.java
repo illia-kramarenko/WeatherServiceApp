@@ -71,7 +71,7 @@ public class WeatherJSONParser {
                 }
             }
         } finally {
-            reader.endObject(); //Caused by: java.lang.IllegalStateException: Expected END_OBJECT but was NUMBER
+            reader.endObject();
         }
     }
 
