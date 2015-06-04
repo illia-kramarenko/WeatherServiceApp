@@ -156,6 +156,12 @@ public class WeatherOperations {
     public void bindService() {
         Log.d(TAG,
                 "calling bindService()");
+        if(mResults!=null)
+            Log.d(TAG,
+                    "current state of mResults =" + mResults.toString());
+        else
+            Log.d(TAG,
+                    "mResults is NULL");
 
         // Launch the Acronym Bound Services if they aren't already
         // running via a call to bindService(), which binds this

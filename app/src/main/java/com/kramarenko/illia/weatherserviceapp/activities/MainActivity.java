@@ -19,8 +19,6 @@ import com.kramarenko.illia.weatherserviceapp.utils.Utils;
 
 public class MainActivity extends LifecycleLoggingActivity {
 
-    // TODO - config changes?? orientation doesnt cahnge
-
     // TODO - CACHE
 
     /**
@@ -82,15 +80,24 @@ public class MainActivity extends LifecycleLoggingActivity {
      */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
+        Log.d(TAG, "Entering onConfigurationChanged");
         mWeatherOps.onConfigurationChanged(newConfig);
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onPause(){
+        if(isFinishing()){
+            // Unbind from the Service.
+            mWeatherOps.unbindService();
+        }
+
+        super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-        // Unbind from the Service.
-        mWeatherOps.unbindService();
+        // MOVED
 
         // Always call super class for necessary operations when an
         // Activity is destroyed.
