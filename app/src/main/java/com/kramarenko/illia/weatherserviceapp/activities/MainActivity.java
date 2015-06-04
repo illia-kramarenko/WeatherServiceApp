@@ -19,7 +19,6 @@ import com.kramarenko.illia.weatherserviceapp.utils.Utils;
 
 public class MainActivity extends LifecycleLoggingActivity {
 
-    // TODO - CACHE
 
     /**
      *  Used for input location
