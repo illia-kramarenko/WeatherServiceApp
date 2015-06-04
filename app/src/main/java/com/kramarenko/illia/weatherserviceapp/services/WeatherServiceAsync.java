@@ -24,7 +24,7 @@ public class WeatherServiceAsync extends LifecycleLoggingService {
      */
     public static Intent makeIntent(Context context) {
         return new Intent(context,
-                WeatherServiceSync.class);
+                WeatherServiceAsync.class);
     }
 
     /**
@@ -67,10 +67,11 @@ public class WeatherServiceAsync extends LifecycleLoggingService {
             if (weatherResults != null) {
                 Log.d(TAG, "Sending Weather results for " + city);
                 callback.sendResults(weatherResults);
-            } else
-                callback.sendError("No expansions for "
+            } else {
+                callback.sendError("Weather Results for "
                         + city
-                        + " found");
+                        + " is NULL somehow");
+            }
         }
     };
 }

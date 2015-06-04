@@ -69,6 +69,8 @@ public class WeatherServiceSync extends LifecycleLoggingService {
             } else {
                 Log.d(TAG, "Weather results for " + city
                         + " is NULL. Returning empty WeatherData" );
+                Utils.showToast(WeatherServiceSync.this, "Weather results for " + city
+                        + " is NULL. Returning empty WeatherData");
                 weatherResults = new WeatherData();
                 return weatherResults;
             }
